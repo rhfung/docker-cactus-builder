@@ -1,6 +1,6 @@
 echo "Starting build"
 
-mkdir /tmp/build
+mkdir -p /tmp/build
 
 cp -r /source/* /tmp/build/
 
