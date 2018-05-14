@@ -1,13 +1,14 @@
 # docker-cactus-builder
 
-This project provides a Docker image for building [Cactus static sites](https://github.com/eudicots/Cactus).
+This project provides a Docker template for building [Cactus static sites](https://github.com/eudicots/Cactus).
 
-Making the Image
-===============
+Requirements
+============
+Install Docker for Mac/Windows 17.05 or higher, uses [multistage build](https://docs.docker.com/develop/develop-images/multistage-build/).
 
-Build the builder image using this command:
-
-    docker build -t cactus-builder https://github.com/rhfung/docker-cactus-builder.git
+Making Your Project
+===================
+Follow the instructions at [Cactus static sites](https://github.com/eudicots/Cactus) for starting a project. This repo contains a sample setup of a Cactus project.
 
 Building Your Project
 ===============
@@ -22,8 +23,39 @@ That means, your project directory has:
       |-> static
       |-> templates
 
-Run this script in your project `./` directory. The Cactus output file will be placed in the `./output` directory.
+Place the following files in your Cactus project:
 
+* Dockerfile
+* start.sh
+
+
+Making the Image
+===============
+
+Build the builder image using this command:
+
+    sh start.sh
+
+## Build the website
+The Dockerfile image will build the Cactus project. It also contains a 
+Nginx web server for viewing the final product.
+
+    echo "Building website"
+    docker build -t cactus-website-image .
+
+## Cleanup old build results
+You can get the build outputs from the Docker container.
+
+    echo "Cleaning old /output"
     rm -rf output
     mkdir output
-    docker run --rm -v $PWD:/source -v $PWD/output:/usr/share/nginx/html cactus-builder 
+
+    echo "Getting /output results"
+    docker run --rm -v $PWD/output:/get_output cactus-website-image sh -c "cp -r /output/* /get_output"
+
+## Run the website locally
+The Docker container contains a Nginx server for viewing the website.
+
+    echo "Running on http://localhost:9000"
+    docker run -p 9000:80 -it cactus-website-image
+
