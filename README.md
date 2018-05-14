@@ -40,22 +40,21 @@ Build the builder image using this command:
 The Dockerfile image will build the Cactus project. It also contains a 
 Nginx web server for viewing the final product.
 
-    echo "Building website"
     docker build -t cactus-website-image .
+
+You can also refer to this repo for the Dockerfile:
+
+    docker build -t newtechq-website-image https://github.com/rhfung/docker-cactus-builder.git
 
 ## Cleanup old build results
 You can get the build outputs from the Docker container.
 
-    echo "Cleaning old /output"
     rm -rf output
     mkdir output
 
-    echo "Getting /output results"
     docker run --rm -v $PWD/output:/get_output cactus-website-image sh -c "cp -r /output/* /get_output"
 
 ## Run the website locally
 The Docker container contains a Nginx server for viewing the website.
 
-    echo "Running on http://localhost:9000"
     docker run -p 9000:80 -it cactus-website-image
-
