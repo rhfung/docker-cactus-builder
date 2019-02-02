@@ -8,8 +8,6 @@ COPY pages /tmp/build/pages
 
 COPY plugins /tmp/build/plugins
 
-COPY source_assets /tmp/build/source_assets
-
 COPY static /tmp/build/static
 
 COPY templates /tmp/build/templates
