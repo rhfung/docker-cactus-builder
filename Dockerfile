@@ -1,10 +1,18 @@
-FROM python:2.7 as cactusbuilder
+FROM python:2.7 AS cactusbuilder
 
 RUN pip install Cactus==3.3.3
 
 RUN mkdir -p /tmp/build
 
-COPY . /tmp/build/
+COPY pages /tmp/build/pages
+
+COPY plugins /tmp/build/plugins
+
+COPY source_assets /tmp/build/source_assets
+
+COPY static /tmp/build/static
+
+COPY templates /tmp/build/templates
 
 RUN rm -rf /tmp/build/.build
 

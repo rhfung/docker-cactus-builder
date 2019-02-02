@@ -13,48 +13,59 @@ Follow the instructions at [Cactus static sites](https://github.com/eudicots/Cac
 Building Your Project
 ===============
 
-This assumes you have set up your [Cactus project](https://github.com/eudicots/Cactus) is set up in the `./` directory.
+This assumes you have set up your [Cactus project](https://github.com/eudicots/Cactus) is set up in the `./project` directory.
 That means, your project directory has:
 
-    ./
+    project
       |-> pages
       |-> plugins
       |-> source_assets
       |-> static
       |-> templates
 
-Place the following files in your Cactus project:
+Then clone this repository into another directory such that:
 
-* Dockerfile
-* start.sh
+    project
+      |-> ...
+    docker-cactus-builder
+      |-> Dockerfile
 
+Place the following files in your project:
 
-Making the Image
-===============
+    project
+      |-> ...
+      |-> start.sh
+    docker-cactus-builder
+      |-> ...
 
-Build the builder image using this command:
+`project/start.sh` file template:
 
-    sh start.sh
+```
+#!/bin/bash
 
-## Build the website
-The Dockerfile image will build the Cactus project. It also contains a 
-Nginx web server for viewing the final product.
+# build the website
+echo "Building website"
+docker build -t cactus-website-image -f ../docker-cactus-builder/Dockerfile .
 
-    docker build -t cactus-website-image .
+# cleanup old build results
+echo "Cleaning old /output"
+rm -rf output
+mkdir output
 
-You can also refer to this repo for the Dockerfile:
+# load new results
+echo "Getting /output results"
+docker run --rm -v $PWD/output:/get_output cactus-website-image sh -c "cp -r /output/* /get_output"
 
-    docker build -t newtechq-website-image https://github.com/rhfung/docker-cactus-builder.git
+# run the website locally
+echo "Running on http://localhost:9000"
+docker run -p 9000:80 -it cactus-website-image
+```
 
-## Cleanup old build results
-You can get the build outputs from the Docker container.
+Make sure the `start.sh` file has proper permissions: `chmod u+rx start.sh`
 
-    rm -rf output
-    mkdir output
+Running
+=======
 
-    docker run --rm -v $PWD/output:/get_output cactus-website-image sh -c "cp -r /output/* /get_output"
+Run the script `start.sh` to build the Cactus website and start the webserver.
 
-## Run the website locally
-The Docker container contains a Nginx server for viewing the website.
-
-    docker run -p 9000:80 -it cactus-website-image
+Every time you make a change you'll need to run this script again.
