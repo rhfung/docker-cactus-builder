@@ -12,9 +12,11 @@ COPY static /tmp/build/static
 
 COPY templates /tmp/build/templates
 
+COPY config.json /tmp/build/config.json
+
 RUN rm -rf /tmp/build/.build
 
-RUN cd /tmp/build && cactus build
+RUN cd /tmp/build && cactus build -c config.json
 
 RUN rm -rf /tmp/build/.build/static
 
