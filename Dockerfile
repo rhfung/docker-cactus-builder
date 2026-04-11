@@ -1,6 +1,6 @@
-FROM python:2.7 AS cactusbuilder
+FROM python:3.10 AS cactusbuilder
 
-RUN pip install Cactus==3.3.3
+RUN pip install git+https://github.com/rhfung/Cactus.git@master
 
 RUN mkdir -p /tmp/build
 
