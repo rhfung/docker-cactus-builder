@@ -4,13 +4,13 @@ RUN pip install git+https://github.com/rhfung/Cactus.git@master
 
 RUN mkdir -p /tmp/build
 
-COPY pages /tmp/build/pages
+COPY pages/ /tmp/build/pages
 
-COPY plugins /tmp/build/plugins
+COPY plugins/ /tmp/build/plugins
 
-COPY static /tmp/build/static
+COPY static/ /tmp/build/static
 
-COPY templates /tmp/build/templates
+COPY templates/ /tmp/build/templates
 
 COPY config.json /tmp/build/config.json
 
@@ -24,7 +24,7 @@ RUN cp -rf /tmp/build/static /tmp/build/.build
 
 RUN chmod -R ugo+rx /tmp/build/.build/static
 
-FROM nginx:1.9.4
+FROM nginx:1.29.8
 
 RUN mkdir -p /usr/share/nginx/html && mkdir -p /output
 
