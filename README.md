@@ -10,32 +10,39 @@ Install Docker for Mac/Windows 17.05 or higher, uses [multistage build](https://
 
 Follow the instructions at [Cactus static sites](https://github.com/eudicots/Cactus) for starting a project. This repo contains a sample setup of a Cactus project.
 
+# Project Structure
+
+Your Cactus project must be organized as follows:
+
+    project
+      |-> pages/          # Page templates and content
+      |-> plugins/        # Cactus plugins
+      |-> static/         # Static assets (images, CSS, JS)
+      |-> templates/      # HTML templates
+      |-> config.json     # Cactus configuration file
+
+The `docker-cactus-builder` repository should be placed adjacent to your project:
+
+    project/
+    docker-cactus-builder/
+      |-> Dockerfile
+      |-> .dockerignore
+
 # Building Your Project
 
-This assumes you have set up your [Cactus project](https://github.com/eudicots/Cactus) is set up in the `./project` directory.
-That means, your project directory has:
+Place the `start.sh` script in your project directory:
 
     project
-      |-> pages
-      |-> plugins
-      |-> source_assets
-      |-> static
-      |-> templates
-
-Then clone this repository into another directory such that:
-
-    project
-      |-> ...
-    docker-cactus-builder
+      |-> pages/
+      |-> plugins/
+      |-> static/
+      |-> templates/
+      |-> config.json
+      |-> start.sh
+    docker-cactus-builder/
       |-> Dockerfile
 
-Place the following files in your project:
-
-    project
-      |-> ...
-      |-> start.sh
-    docker-cactus-builder
-      |-> ...
+## start.sh Script
 
 `project/start.sh` file template:
 
