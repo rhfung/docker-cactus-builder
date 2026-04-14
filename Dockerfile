@@ -24,10 +24,4 @@ RUN cp -rf /tmp/build/static /tmp/build/.build
 
 RUN chmod -R ugo+rx /tmp/build/.build/static
 
-FROM nginx:1.29.8
-
-RUN mkdir -p /usr/share/nginx/html && mkdir -p /output
-
-COPY --from=cactusbuilder /tmp/build/.build /usr/share/nginx/html
-
-RUN cp -rf /usr/share/nginx/html/* /output
+RUN mkdir -p /output && cp -rf /tmp/build/.build/* /output
