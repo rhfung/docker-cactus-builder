@@ -2,16 +2,15 @@
 
 This project provides a Docker template for building [Cactus static sites](https://github.com/eudicots/Cactus).
 
-Requirements
-============
+# Requirements
+
 Install Docker for Mac/Windows 17.05 or higher, uses [multistage build](https://docs.docker.com/develop/develop-images/multistage-build/).
 
-Making Your Project
-===================
+# Making Your Project
+
 Follow the instructions at [Cactus static sites](https://github.com/eudicots/Cactus) for starting a project. This repo contains a sample setup of a Cactus project.
 
-Building Your Project
-===============
+# Building Your Project
 
 This assumes you have set up your [Cactus project](https://github.com/eudicots/Cactus) is set up in the `./project` directory.
 That means, your project directory has:
@@ -57,14 +56,13 @@ echo "Getting /output results"
 docker run --rm -v $PWD/output:/get_output cactus-website-image sh -c "cp -r /output/* /get_output"
 
 # run the website locally
-echo "Running on http://localhost:9000"
-docker run -p 9000:80 -it cactus-website-image
+echo "Running on http://localhost:9090"
+cd output && npx http-server -p 9090
 ```
 
 Make sure the `start.sh` file has proper permissions: `chmod u+rx start.sh`
 
-Running
-=======
+# Running
 
 Run the script `start.sh` to build the Cactus website and start the webserver.
 
